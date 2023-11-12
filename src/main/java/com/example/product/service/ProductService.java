@@ -1,0 +1,84 @@
+package com.example.product.service;
+
+import com.example.product.dao.repository.ProductRepository;
+import com.example.product.pojo.ProductDo;
+import com.example.product.pojo.ProductDto;
+import com.example.product.pojo.ResponseDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class ProductService {
+
+    private final ProductRepository productRepository;
+    private final MessageSource messageSource;
+
+    public ResponseDto<String> createProduct(ProductDto productDto) {
+        ProductDo productDo = mapToProductDo(productDto);
+        productRepository.save(productDo);
+
+        ResponseDto<String> responseDto = new ResponseDto<>();
+        responseDto.setStatus(1);
+        String message = messageSource.getMessage("product.create.success", null, LocaleContextHolder.getLocale());
+        responseDto.setMessage(message);
+
+        return responseDto;
+    }
+
+    public ResponseDto<String> editProduct(Integer productId, ProductDto productDto) {
+        Optional<ProductDo> optionalProduct = productRepository.findById(productId);
+        if (optionalProduct.isPresent()) {
+            ProductDo existingProduct = optionalProduct.get();
+
+            existingProduct.setId(productId);
+            existingProduct.setName(productDto.getName());
+            existingProduct.setDescription(productDto.getDescription());
+            existingProduct.setPrice(productDto.getPrice());
+            existingProduct.setStockQuantity(productDto.getStockQuantity());
+
+            productRepository.save(existingProduct);
+
+            ResponseDto<String> responseDto = new ResponseDto<>();
+            responseDto.setStatus(1);
+            String message = messageSource.getMessage("product.edit.success", null, LocaleContextHolder.getLocale());
+            responseDto.setMessage(message);
+
+            return responseDto;
+        } else {
+            ResponseDto<String> responseDto = new ResponseDto<>();
+            responseDto.setStatus(0);
+            String message = messageSource.getMessage("product.edit.notfound", null, LocaleContextHolder.getLocale());
+            responseDto.setMessage(message);
+
+            return responseDto;
+        }
+    }
+
+    public ResponseDto<String> deleteProduct(Integer productId) {
+        productRepository.deleteById(productId);
+
+        ResponseDto<String> responseDto = new ResponseDto<>();
+        responseDto.setStatus(1);
+        String message = messageSource.getMessage("product.delete.success", null, LocaleContextHolder.getLocale());
+        responseDto.setMessage(message);
+
+        return responseDto;
+    }
+
+    public ProductDo mapToProductDo(ProductDto productDto) {
+        ProductDo productDo = new ProductDo();
+        productDo.setName(productDto.getName());
+        productDo.setDescription(productDto.getDescription());
+        productDo.setPrice(productDto.getPrice());
+        productDo.setStockQuantity(productDto.getStockQuantity());
+
+        return productDo;
+    }
+}
