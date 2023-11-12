@@ -17,16 +17,20 @@ public class ProductDo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(name = "title", nullable = false)
+    private String title;
 
+    @Column(name = "description")
     private String description;
 
-    @Column(nullable = false)
+    @Column(name = "price", nullable = false)
     private BigDecimal price;
 
     @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity;
+
+    @Column(name = "publish")
+    private Integer publish;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

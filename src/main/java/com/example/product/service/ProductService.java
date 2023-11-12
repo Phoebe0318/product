@@ -10,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,10 +39,11 @@ public class ProductService {
             ProductDo existingProduct = optionalProduct.get();
 
             existingProduct.setId(productId);
-            existingProduct.setName(productDto.getName());
+            existingProduct.setTitle(productDto.getName());
             existingProduct.setDescription(productDto.getDescription());
             existingProduct.setPrice(productDto.getPrice());
             existingProduct.setStockQuantity(productDto.getStockQuantity());
+            existingProduct.setPublish(productDto.getPublish());
 
             productRepository.save(existingProduct);
 
@@ -72,12 +74,25 @@ public class ProductService {
         return responseDto;
     }
 
+    public ResponseDto<String> getAllProducts() {
+        List<ProductDo> allProducts = productRepository.findAll();
+
+        ResponseDto<String> responseDto = new ResponseDto<>();
+        responseDto.setStatus(1);
+        String message = messageSource.getMessage("product.fetch.success", null, LocaleContextHolder.getLocale());
+        responseDto.setMessage(message);
+        responseDto.setData(allProducts);
+
+        return responseDto;
+    }
+
     public ProductDo mapToProductDo(ProductDto productDto) {
         ProductDo productDo = new ProductDo();
-        productDo.setName(productDto.getName());
+        productDo.setTitle(productDto.getName());
         productDo.setDescription(productDto.getDescription());
         productDo.setPrice(productDto.getPrice());
         productDo.setStockQuantity(productDto.getStockQuantity());
+        productDo.setPublish(productDto.getPublish());
 
         return productDo;
     }

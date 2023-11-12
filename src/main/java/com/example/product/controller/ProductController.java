@@ -31,4 +31,10 @@ public class ProductController {
     public ResponseDto<String> deleteProduct(@PathVariable Integer productId){
         return productService.deleteProduct(productId);
     }
+
+    @GetMapping
+    @Operation(summary = "get all products")
+    public ResponseDto<String> getAllProducts(){
+        return productService.getAllProducts();
+    }
 }
