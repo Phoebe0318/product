@@ -86,6 +86,30 @@ public class ProductService {
         return responseDto;
     }
 
+    public ResponseDto<String> getAllPublishedProducts() {
+        List<ProductDo> publishedProducts = productRepository.findByPublish(1);
+
+        ResponseDto<String> responseDto = new ResponseDto<>();
+        responseDto.setStatus(1);
+        String message = messageSource.getMessage("product.fetch.success", null, LocaleContextHolder.getLocale());
+        responseDto.setMessage(message);
+        responseDto.setData(publishedProducts);
+
+        return responseDto;
+    }
+
+    public ResponseDto<String> getAllUnpublishedProducts() {
+        List<ProductDo> unPublishedProducts = productRepository.findByPublish(0);
+
+        ResponseDto<String> responseDto = new ResponseDto<>();
+        responseDto.setStatus(1);
+        String message = messageSource.getMessage("product.fetch.success", null, LocaleContextHolder.getLocale());
+        responseDto.setMessage(message);
+        responseDto.setData(unPublishedProducts);
+
+        return responseDto;
+    }
+
     public ProductDo mapToProductDo(ProductDto productDto) {
         ProductDo productDo = new ProductDo();
         productDo.setTitle(productDto.getName());

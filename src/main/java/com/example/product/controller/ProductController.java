@@ -37,4 +37,16 @@ public class ProductController {
     public ResponseDto<String> getAllProducts(){
         return productService.getAllProducts();
     }
+
+    @GetMapping("/published")
+    @Operation(summary = "get all published products")
+    public ResponseDto<String> getAllPublishedProducts() {
+        return productService.getAllPublishedProducts();
+    }
+
+    @GetMapping("/unpublished")
+    @Operation(summary = "get all unpublished products")
+    public ResponseDto<String> getAllUnpublishedProducts() {
+        return productService.getAllUnpublishedProducts();
+    }
 }
