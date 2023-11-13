@@ -1,7 +1,10 @@
 package com.example.product.exception;
 
+import java.io.Serial;
+
 public class ServiceException extends RuntimeException{
 
+    @Serial
     private static final long serialVersionUID = -4513514459698548384L;
 
     public ServiceException(String message) {
