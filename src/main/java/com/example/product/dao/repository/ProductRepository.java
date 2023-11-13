@@ -10,5 +10,5 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<ProductDo, Integer> {
     List<ProductDo> findByPublish(int i);
 
-    boolean existsByName(String name);
+    boolean existsByTitle(String name);
 }

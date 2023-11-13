@@ -36,7 +36,7 @@ public class ProductService {
             return errorResponse;
         }
 
-        if (productRepository.existsByName(productDto.getName())) {
+        if (productRepository.existsByTitle(productDto.getName())) {
             log.warn("Product with name {} already exists.", productDto.getName());
             ResponseDto<String> errorResponse = new ResponseDto<>();
             errorResponse.setStatus(0);
