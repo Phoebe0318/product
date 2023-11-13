@@ -1,11 +1,14 @@
 package com.example.product.controller;
 
 import com.example.product.pojo.ProductDto;
+import com.example.product.pojo.ProductInfoDto;
 import com.example.product.pojo.ResponseDto;
 import com.example.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,19 +37,19 @@ public class ProductController {
 
     @GetMapping
     @Operation(summary = "get all products")
-    public ResponseDto<String> getAllProducts(){
+    public ResponseDto<List<ProductInfoDto>> getAllProducts(){
         return productService.getAllProducts();
     }
 
     @GetMapping("/published")
     @Operation(summary = "get all published products")
-    public ResponseDto<String> getAllPublishedProducts() {
+    public ResponseDto<List<ProductInfoDto>> getAllPublishedProducts() {
         return productService.getAllPublishedProducts();
     }
 
     @GetMapping("/unpublished")
     @Operation(summary = "get all unpublished products")
-    public ResponseDto<String> getAllUnpublishedProducts() {
+    public ResponseDto<List<ProductInfoDto>> getAllUnpublishedProducts() {
         return productService.getAllUnpublishedProducts();
     }
 }
