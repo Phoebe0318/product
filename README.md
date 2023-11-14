@@ -69,3 +69,44 @@ This is a simple API for managing products. It allows you to perform basic CRUD 
 6. **Retrieve Unpublished Products**:
    - Send a `GET` request to `/products/unpublished`.
 
+### Using Docker
+
+1. **Pull the Docker Image:**
+
+    ```bash
+    docker pull anlica62712/product
+    ```
+
+2. **Run the Docker Container:**
+
+    ```bash
+    docker run -d -p 8080:8080 --name product anlica62712/product:latest
+    ```
+
+    Replace `8080` with the desired port if needed.
+
+3. **Access the API:**
+
+    Open your web browser or use a tool like [curl](https://curl.se/) or [Postman](https://www.postman.com/) to interact with the API.
+
+    - Base URL: `http://localhost:8080` (Replace `8080` with the port you specified)
+    - API Endpoints:
+        - Create Product: `POST /products`
+        - Edit Product: `PUT /products/{productId}`
+        - Delete Product: `DELETE /products/{productId}`
+        - Get All Products: `GET /products`
+        - Get Published Products: `GET /products/published`
+        - Get Unpublished Products: `GET /products/unpublished`
+
+4. **Stop the Docker Container:**
+
+    ```bash
+    docker stop product
+    ```
+
+    Ensure to stop the container when you are done testing.
+
+## Important Note
+
+- Ensure that Docker is installed on your machine before running the above commands.
+- Adjust port numbers and container names according to your preferences.
