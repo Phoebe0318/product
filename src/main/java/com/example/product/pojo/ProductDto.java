@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Schema(name = "ProductDto", description = "Product information")
 public class ProductDto {
     @Schema(description = "Name of the product", example = "Smartphone")
-    private String name;
+    private String title;
 
     @Schema(description = "Description of the product")
     private String description;
