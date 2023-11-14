@@ -25,9 +25,9 @@ public class ProductService {
     private final MessageSource messageSource;
 
     public ResponseDto<String> createProduct(ProductDto productDto) {
-        log.info("Creating product with name: {}", productDto.getName());
+        log.info("Creating product with name: {}", productDto.getTitle());
 
-        if (StringUtils.isBlank(productDto.getName()) || productDto.getPrice() == null) {
+        if (StringUtils.isBlank(productDto.getTitle()) || productDto.getPrice() == null) {
             log.warn("Invalid input for creating product.");
             ResponseDto<String> errorResponse = new ResponseDto<>();
             errorResponse.setStatus(0);
@@ -36,8 +36,8 @@ public class ProductService {
             return errorResponse;
         }
 
-        if (productRepository.existsByTitle(productDto.getName())) {
-            log.warn("Product with name {} already exists.", productDto.getName());
+        if (productRepository.existsByTitle(productDto.getTitle())) {
+            log.warn("Product with name {} already exists.", productDto.getTitle());
             ResponseDto<String> errorResponse = new ResponseDto<>();
             errorResponse.setStatus(0);
             String errorMessage = messageSource.getMessage("product.create.duplicateName", null, LocaleContextHolder.getLocale());
@@ -48,7 +48,7 @@ public class ProductService {
         ProductDo productDo = mapToProductDo(productDto);
         productRepository.save(productDo);
 
-        log.info("Product with name {} created successfully.", productDto.getName());
+        log.info("Product with name {} created successfully.", productDto.getTitle());
 
         ResponseDto<String> responseDto = new ResponseDto<>();
         responseDto.setStatus(1);
@@ -66,7 +66,7 @@ public class ProductService {
             ProductDo existingProduct = optionalProduct.get();
 
             existingProduct.setId(productId);
-            existingProduct.setTitle(productDto.getName());
+            existingProduct.setTitle(productDto.getTitle());
             existingProduct.setDescription(productDto.getDescription());
             existingProduct.setPrice(productDto.getPrice());
             existingProduct.setStockQuantity(productDto.getStockQuantity());
@@ -201,7 +201,7 @@ public class ProductService {
 
     public ProductDo mapToProductDo(ProductDto productDto) {
         ProductDo productDo = new ProductDo();
-        productDo.setTitle(productDto.getName());
+        productDo.setTitle(productDto.getTitle());
         productDo.setDescription(productDto.getDescription());
         productDo.setPrice(productDto.getPrice());
         productDo.setStockQuantity(productDto.getStockQuantity());
